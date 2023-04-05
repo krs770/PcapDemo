@@ -1,3 +1,4 @@
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -18,12 +19,15 @@ public class Main {
             if (svPacket.isPresent()) {
 
                 List<SvPacket> list = svPacket.stream().toList();
-
                 set1.addAll(list);
             }
         });
 
         ethernetListener.start();
+
+        Thread.sleep(10000L);
+
+        ethernetListener.pause();
 
         for (SvPacket element : set1) {
             System.out.println(element);

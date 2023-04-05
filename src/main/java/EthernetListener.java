@@ -22,8 +22,13 @@ public class EthernetListener {
         }
     }
 
+    boolean isActive = true;
 
-@Setter
+    public void pause() {
+        isActive = false;
+    }
+
+    @Setter
     private String nicName;
 
     private PcapHandle handle;
@@ -45,15 +50,18 @@ public class EthernetListener {
                 handle.setFilter(filter, BpfProgram.BpfCompileMode.OPTIMIZE);
 
                 Thread captureThread = new Thread(() -> {
+                    while (isActive) {
                         try {
                             log.info("Starting packet capture");
-                            handle.loop(6000, defaultPacketListener);
+                            handle.loop(0, defaultPacketListener);
                         } catch (PcapNativeException | InterruptedException | NotOpenException e) {
                             throw new RuntimeException(e);
                         }
                         log.info("Packet capture finished");
+                    }
+                    System.out.println("FINISHED");
                 });
-                captureThread.run();
+                captureThread.start();
             }
         }
     }
