@@ -85,6 +85,12 @@ public class Main {
             log.info("No short circuit");
         }
 
+        Thread.sleep(1000L);
+        
+        for(SvPacket element: set1){
+            System.out.println(element);
+        }
+
         System.out.println("Current normal mode = " + Inorm / Math.sqrt(2));
         System.out.println("Voltage normal mode = " + Unorm / Math.sqrt(2));
         System.out.println("IaAvar = " + I_A_avr / Math.sqrt(2));
